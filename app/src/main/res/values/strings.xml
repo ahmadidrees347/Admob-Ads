@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Ads Lib</string>
+    <string name="load_banner">Load Banner</string>
+    <string name="load_native">Load Native</string>
+    <string name="on_demand_inter">On Demand Inter</string>
+    <string name="show_inter">Show Inter</string>
+    <string name="load_inter">Load Inter</string>
+    <string name="show_appopen">Show AppOpen</string>
+    <string name="load_appopen">Load AppOpen</string>
+</resources>

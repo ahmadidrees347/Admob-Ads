@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "816941791543",
+    "project_id": "newone-33895",
+    "storage_bucket": "newone-33895.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:816941791543:android:57ade9d363823c4c2902b2",
+        "android_client_info": {
+          "package_name": "com.ads.demo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "816941791543-mv4km02uaquvd4t4n424h5mbcr8smkla.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB09QIqgLt95O5uQjyIk0duflBS_IwisUM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "816941791543-mv4km02uaquvd4t4n424h5mbcr8smkla.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
