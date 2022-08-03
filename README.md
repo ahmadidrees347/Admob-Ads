@@ -13,7 +13,7 @@ allprojects {
 ### Add this in your build.gradle
 
 ```groovy
-implementation 'com.github.ahmadidrees347:ads_lib:version'
+implementation 'com.github.ahmadidrees347:Admob-Ads:version'
 ```
 
 Do not forget to add internet permission in manifest if already not present
