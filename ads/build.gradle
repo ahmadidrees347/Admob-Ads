@@ -40,5 +40,5 @@ dependencies {
     //LifeCycle
     api 'androidx.lifecycle:lifecycle-process:2.5.0'
     //Google Ad's
-    api 'com.google.android.gms:play-services-ads-lite:21.0.0'
+    api 'com.google.android.gms:play-services-ads-lite:21.1.0'
 }

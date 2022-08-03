@@ -9,6 +9,7 @@ import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdOptions
 import com.google.android.gms.ads.nativead.NativeAdView
 
+const val TAG ="Admob_Native"
 fun populateNativeAdView(nativeAd: NativeAd, adView: NativeAdView) {
 
     adView.apply {
@@ -130,6 +131,7 @@ fun Activity.loadNativeAdmob(
         adFrame?.removeAllViews()
         adFrame?.addView(adView)
         successListener?.invoke(nativeAd)
+        Log.e(TAG, "NativeAd loaded.")
     }
 
     val videoOptions = VideoOptions.Builder()
@@ -146,7 +148,7 @@ fun Activity.loadNativeAdmob(
         override fun onAdFailedToLoad(loadAdError: LoadAdError) {
             val error =
                 "${loadAdError.domain}, code: ${loadAdError.code}, message: ${loadAdError.message}"
-            Log.e("Admob_Native", error)
+            Log.e(TAG, error)
             failedListener?.invoke(error)
         }
     }).build()

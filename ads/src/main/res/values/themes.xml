@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AdTheme" >
+
+    <style name="AdTheme">
         <item name="android:background">@color/white</item>
         <item name="android:windowBackground">@color/white</item>
         <item name="android:windowExitAnimation">@null</item>

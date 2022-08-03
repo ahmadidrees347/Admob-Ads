@@ -13,11 +13,12 @@ import com.google.android.gms.ads.appopen.AppOpenAd
 import com.google.android.gms.ads.appopen.AppOpenAd.AppOpenAdLoadCallback
 import org.jetbrains.annotations.NotNull
 
-const val TAG = "Admob_AppOpen"
 
-class OpenApp(private val appClass: Application, private val adId: String) :
+
+class AppOpen(private val appClass: Application, private val adId: String) :
     Application.ActivityLifecycleCallbacks, LifecycleObserver, LifecycleEventObserver {
-
+   
+    private val tag = "Admob_AppOpen"
     private var isShowingAd = false
     private var isAdShowAlways = false
 
@@ -30,7 +31,7 @@ class OpenApp(private val appClass: Application, private val adId: String) :
         appClass.registerActivityLifecycleCallbacks(this)
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
         if (isAdShowAlways) {
-            fetchAd()
+            fetchAd {}
         }
     }
 
@@ -41,8 +42,8 @@ class OpenApp(private val appClass: Application, private val adId: String) :
     /**
      * Request an ad
      */
-    fun fetchAd() {
-        Log.e(TAG, "fetchAd " + isAdAvailable())
+    fun fetchAd(listener: (Boolean) -> Unit) {
+        Log.e(tag, "fetchAd " + isAdAvailable())
         // Have unused ad, no need to fetch another.
         if (isAdAvailable()) {
             return
@@ -62,7 +63,8 @@ class OpenApp(private val appClass: Application, private val adId: String) :
 
             override fun onAdLoaded(ad: AppOpenAd) {
                 appOpenAd = ad
-                Log.e(TAG, "loaded")
+                listener.invoke(true)
+                Log.e(tag, "loaded")
             }
 
             /**
@@ -72,7 +74,8 @@ class OpenApp(private val appClass: Application, private val adId: String) :
              */
             override fun onAdFailedToLoad(loadAdError: LoadAdError) {
                 appOpenAd = null
-                Log.e(TAG, "error $loadAdError")
+                listener.invoke(false)
+                Log.e(tag, "error $loadAdError")
             }
         }
         val request: AdRequest = getAdRequest()
@@ -90,7 +93,7 @@ class OpenApp(private val appClass: Application, private val adId: String) :
                     appOpenAd = null
                     isShowingAd = false
                     if (isAdShowAlways) {
-                        fetchAd()
+                        fetchAd {}
                     }
                     listener.invoke(true)
                 }
@@ -108,7 +111,7 @@ class OpenApp(private val appClass: Application, private val adId: String) :
             }
         } else {
             if (isAdShowAlways) {
-                fetchAd()
+                fetchAd {}
             }
             listener.invoke(false)
         }

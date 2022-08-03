@@ -13,9 +13,6 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 
 open class InterAdmobClass {
 
-    private var isAdLoaded = false
-    private var admobInterstitialAd: InterstitialAd? = null
-
     companion object {
         const val TAG = "Admob_Inter"
 
@@ -29,13 +26,23 @@ open class InterAdmobClass {
         var isInterstitialShown = false
 
         @JvmStatic
+        var adFailedAttempts = 3
+
+        @JvmStatic
+        var adLoadAuto = false
+
+        @JvmStatic
         fun getInstance() =
             instance ?: synchronized(this) {
                 instance ?: InterAdmobClass().also { instance = it }
             }
     }
+    
+    private var admobInterAd: InterstitialAd? = null
+    private var adFailedCounter = 0
+    private var isAdLoaded = false
 
-    private fun isAdLoaded() = (isAdLoaded && (admobInterstitialAd != null))
+    private fun isAdLoaded() = (isAdLoaded && (admobInterAd != null))
 
 
     fun loadInterstitialAd(
@@ -48,14 +55,18 @@ open class InterAdmobClass {
             object : InterstitialAdLoadCallback() {
                 override fun onAdFailedToLoad(ad: LoadAdError) {
                     Log.e(TAG, "onAdFailedToLoad - $ad")
-                    admobInterstitialAd = null
+                    admobInterAd = null
                     isAdLoaded = false
                     isInterstitialShown = false
+                    adFailedCounter++
+                    if (adFailedCounter < adFailedAttempts) {
+                        loadInterstitialAd(context, adInterId) {}
+                    }
                     listener.invoke(false)
                 }
 
                 override fun onAdLoaded(ad: InterstitialAd) {
-                    admobInterstitialAd = ad
+                    admobInterAd = ad
                     isAdLoaded = true
                     isInterstitialShown = false
                     Log.e(TAG, "Loaded")
@@ -67,16 +78,20 @@ open class InterAdmobClass {
 
     fun showInterstitialAd(
         activity: Activity,
+        adInterId: String,
         listener: (Boolean) -> Unit,
         listenerImp: (() -> Unit)? = null
     ) {
-        admobInterstitialAd?.fullScreenContentCallback =
+        admobInterAd?.fullScreenContentCallback =
             object : FullScreenContentCallback() {
                 override fun onAdDismissedFullScreenContent() {
                     Log.e(TAG, "onAdDismissedFullScreenContent")
-                    admobInterstitialAd = null
+                    admobInterAd = null
                     isAdLoaded = false
                     isInterstitialShown = false
+                    if (adLoadAuto) {
+                        loadInterstitialAd(activity, adInterId) {}
+                    }
                     listener.invoke(true)
                 }
 
@@ -102,7 +117,7 @@ open class InterAdmobClass {
             }
 
         if (isAdLoaded) {
-            admobInterstitialAd?.show(activity)
+            admobInterAd?.show(activity)
         } else {
             listener.invoke(false)
         }
@@ -133,7 +148,7 @@ open class InterAdmobClass {
                 if (dialog?.isShowing == true)
                     dialog.dismiss()
                 if (!isTimeUp)
-                    showInterstitialAd(activity, {
+                    showInterstitialAd(activity, adInterId, {
                         isAdShow = true
                         listener.invoke()
                     }, {
@@ -146,7 +161,7 @@ open class InterAdmobClass {
                     if (dialog?.isShowing == true)
                         dialog.dismiss()
                     if (!isTimeUp)
-                        showInterstitialAd(activity, {
+                        showInterstitialAd(activity, adInterId, {
                             Log.e(TAG, "isAdShown $it")
                             listener.invoke()
                         }, {

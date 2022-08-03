@@ -18,6 +18,7 @@ fun Context.showAdmobBanner(
     adView.adListener = object : AdListener() {
         override fun onAdLoaded() {
             super.onAdLoaded()
+            Log.e("Admob_Banner", "onAdLoaded - Banner")
             successListener?.invoke()
         }
 

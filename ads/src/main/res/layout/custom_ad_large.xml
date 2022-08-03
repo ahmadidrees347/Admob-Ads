@@ -89,7 +89,7 @@
         <com.google.android.gms.ads.nativead.MediaView
             android:id="@+id/ad_media"
             android:layout_width="0dp"
-            android:layout_height="220dp"
+            android:layout_height="250dp"
             android:layout_margin="2dp"
             android:fitsSystemWindows="true"
             app:layout_constraintEnd_toEndOf="parent"

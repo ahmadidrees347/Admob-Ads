@@ -8,7 +8,7 @@
 
     <Button
         android:id="@+id/btnLoadInter"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/load_inter"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,7 +18,7 @@
 
     <Button
         android:id="@+id/btnShowInter"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/show_inter"
         app:layout_constraintEnd_toStartOf="@+id/btnLoadInter"
@@ -28,7 +28,7 @@
 
     <Button
         android:id="@+id/btnDemandInter"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/on_demand_inter"
         app:layout_constraintEnd_toStartOf="@+id/btnShowInter"
@@ -38,7 +38,7 @@
 
     <Button
         android:id="@+id/btnLoadNative"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/load_native"
         app:layout_constraintEnd_toStartOf="@+id/btnLoadBanner"
@@ -48,33 +48,33 @@
 
     <Button
         android:id="@+id/btnLoadBanner"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/load_banner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btnLoadNative"
-        app:layout_constraintTop_toBottomOf="@+id/btnLoadInter" />
+        app:layout_constraintTop_toTopOf="@+id/btnLoadNative" />
 
     <Button
         android:id="@+id/btnLoadAppOpen"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/load_appopen"
         app:layout_constraintEnd_toStartOf="@+id/btnShowAppOpen"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLoadBanner" />
+        app:layout_constraintTop_toBottomOf="@+id/btnLoadNative" />
 
     <Button
         android:id="@+id/btnShowAppOpen"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/show_appopen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btnLoadAppOpen"
-        app:layout_constraintTop_toBottomOf="@+id/btnLoadBanner" />
+        app:layout_constraintTop_toBottomOf="@+id/btnLoadNative" />
 
     <FrameLayout
         android:id="@+id/nativeLayout"

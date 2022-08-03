@@ -9,6 +9,7 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import android.widget.Toast
 
 fun Context.isNetworkAvailable(): Boolean {
     val connectivityManager =
@@ -31,6 +32,10 @@ fun Context.isNetworkAvailable(): Boolean {
     }
 }
 
+fun Context.showToast(msg: String) {
+    Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+}
+
 fun Context.verifyInstallerId(): Boolean {
     if (BuildConfig.DEBUG)
         return true
@@ -48,18 +53,14 @@ fun Context.getInstallerPackageName(): String? {
     return null
 }
 
-fun Activity.loadInterstitial(adInterId: String, listener: () -> Unit) {
+fun Activity.loadInterstitial(adInterId: String, listener: (Boolean) -> Unit) {
     InterAdmobClass.getInstance()
-        .loadInterstitialAd(this, adInterId) {
-            listener.invoke()
-        }
+        .loadInterstitialAd(this, adInterId, listener)
 }
 
-fun Activity.showInterstitial(listener: () -> Unit) {
+fun Activity.showInterstitial(adInterId: String, listener: (Boolean) -> Unit) {
     InterAdmobClass.getInstance()
-        .showInterstitialAd(this, {
-            listener.invoke()
-        }, null)
+        .showInterstitialAd(this, adInterId, listener, null)
 }
 
 fun Activity.showInterOnDemand(
