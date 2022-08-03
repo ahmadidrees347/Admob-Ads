@@ -8,7 +8,7 @@ import com.google.android.gms.ads.*
 fun Context.showAdmobBanner(
     adId: String, bannerLayout: FrameLayout,
     successListener: (() -> Unit)? = null,
-    failedListener: (() -> Unit)? = null
+    failedListener: ((String) -> Unit)? = null
 ) {
     val adaptiveAds = AdaptiveAds(this)
     val adView = AdView(this)
@@ -25,7 +25,7 @@ fun Context.showAdmobBanner(
         override fun onAdFailedToLoad(p0: LoadAdError) {
             super.onAdFailedToLoad(p0)
             Log.e("Admob_Banner", "onAdFailedToLoad - $p0")
-            failedListener?.invoke()
+            failedListener?.invoke(p0.toString())
         }
     }
     val testDevices = ArrayList<String>()

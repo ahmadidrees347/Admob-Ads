@@ -64,7 +64,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.btnLoadBanner).setOnClickListener {
-            showAdmobBanner(Constants.BannerId, findViewById(R.id.bannerLayout))
+            showAdmobBanner(Constants.BannerId, findViewById(R.id.bannerLayout),{
+
+            },{
+
+            })
         }
 
     }
