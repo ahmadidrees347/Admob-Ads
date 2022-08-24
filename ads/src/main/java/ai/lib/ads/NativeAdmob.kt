@@ -36,7 +36,7 @@ fun populateNativeAdView(nativeAd: NativeAd, adView: NativeAdView) {
     // check before trying to display them.
     nativeAd.body?.let { body ->
         adView.bodyView?.beVisible()
-        (adView.bodyView as TextView?)?.text = body
+        (adView.bodyView as? TextView?)?.text = body
     } ?: run {
         adView.bodyView?.beInVisible()
     }
@@ -49,21 +49,21 @@ fun populateNativeAdView(nativeAd: NativeAd, adView: NativeAdView) {
 
     nativeAd.icon?.let {
         adView.iconView?.beVisible()
-        (adView.iconView as ImageView?)?.setImageDrawable(it.drawable)
+        (adView.iconView as? ImageView?)?.setImageDrawable(it.drawable)
     } ?: run {
         adView.iconView?.beInVisible()
     }
 
     nativeAd.price?.let { price ->
         adView.priceView?.beVisible()
-        (adView.priceView as TextView?)?.text = price
+        (adView.priceView as? TextView?)?.text = price
     } ?: run {
         adView.priceView?.beInVisible()
     }
 
     nativeAd.store?.let { store ->
         adView.storeView?.beVisible()
-        (adView.storeView as TextView?)?.text = store
+        (adView.storeView as? TextView?)?.text = store
     } ?: run {
         adView.storeView?.beGone()
     }
@@ -71,14 +71,14 @@ fun populateNativeAdView(nativeAd: NativeAd, adView: NativeAdView) {
 
     nativeAd.starRating?.let { starRating ->
         adView.starRatingView?.beVisible()
-        (adView.starRatingView as RatingBar?)?.rating = starRating.toFloat()
+        (adView.starRatingView as? RatingBar?)?.rating = starRating.toFloat()
     } ?: run {
         adView.starRatingView?.beGone()
     }
 
     nativeAd.advertiser?.let { advertiser ->
         adView.advertiserView?.beVisible()
-        (adView.advertiserView as TextView?)?.text = advertiser
+        (adView.advertiserView as? TextView?)?.text = advertiser
     } ?: run {
         adView.advertiserView?.beGone()
     }

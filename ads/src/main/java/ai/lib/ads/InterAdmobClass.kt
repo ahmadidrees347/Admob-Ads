@@ -11,6 +11,7 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 
+
 open class InterAdmobClass {
 
     companion object {
@@ -37,7 +38,7 @@ open class InterAdmobClass {
                 instance ?: InterAdmobClass().also { instance = it }
             }
     }
-    
+
     private var admobInterAd: InterstitialAd? = null
     private var adFailedCounter = 0
     private var isAdLoaded = false
@@ -92,7 +93,7 @@ open class InterAdmobClass {
                     if (adLoadAuto) {
                         loadInterstitialAd(activity, adInterId) {}
                     }
-                    listener.invoke(true)
+                    activity.runOnUiThread { listener.invoke(true) }
                 }
 
                 override fun onAdFailedToShowFullScreenContent(p0: AdError) {
@@ -100,7 +101,7 @@ open class InterAdmobClass {
                     isAdLoaded = false
                     isInterstitialShown = false
                     super.onAdFailedToShowFullScreenContent(p0)
-                    listener.invoke(false)
+                    activity.runOnUiThread { listener.invoke(false) }
                 }
 
                 override fun onAdImpression() {
@@ -119,7 +120,7 @@ open class InterAdmobClass {
         if (isAdLoaded) {
             admobInterAd?.show(activity)
         } else {
-            listener.invoke(false)
+            activity.runOnUiThread { listener.invoke(false) }
         }
     }
 
@@ -134,23 +135,38 @@ open class InterAdmobClass {
         if (activity.isNetworkAvailable() &&
             activity.verifyInstallerId()
         ) {
-
             afterDelay(waitingTimeForAd) {
-                if (dialog?.isShowing == true)
-                    dialog.dismiss()
+                if (!activity.isDestroyed && !activity.isFinishing)
+                    if (dialog?.isShowing == true) {
+                        try {
+                            dialog.dismiss()
+                        } catch (e: IllegalArgumentException) {
+                            // Do nothing.
+                        } catch (e: Exception) {
+                            // Do nothing.
+                        }
+                    }
                 isTimeUp = true
                 if (!isAdShow)
-                    listener.invoke()
+                    activity.runOnUiThread { listener.invoke() }
             }
             Log.e(TAG, "isAdLoaded ${isAdLoaded()}")
             if (isAdLoaded()) {
                 Log.e(TAG, "Already Loaded")
-                if (dialog?.isShowing == true)
-                    dialog.dismiss()
+                if (!activity.isDestroyed && !activity.isFinishing)
+                    if (dialog?.isShowing == true) {
+                        try {
+                            dialog.dismiss()
+                        } catch (e: IllegalArgumentException) {
+                            // Do nothing.
+                        } catch (e: Exception) {
+                            // Do nothing.
+                        }
+                    }
                 if (!isTimeUp)
                     showInterstitialAd(activity, adInterId, {
                         isAdShow = true
-                        listener.invoke()
+                        activity.runOnUiThread { listener.invoke() }
                     }, {
                         isAdShow = true
                     })
@@ -158,19 +174,27 @@ open class InterAdmobClass {
                 dialog?.show()
                 loadInterstitialAd(activity, adInterId) {
                     Log.e(TAG, "Load Ad")
-                    if (dialog?.isShowing == true)
-                        dialog.dismiss()
+                    if (!activity.isDestroyed && !activity.isFinishing)
+                        if (dialog?.isShowing == true) {
+                            try {
+                                dialog.dismiss()
+                            } catch (e: IllegalArgumentException) {
+                                // Do nothing.
+                            } catch (e: Exception) {
+                                // Do nothing.
+                            }
+                        }
                     if (!isTimeUp)
                         showInterstitialAd(activity, adInterId, {
                             Log.e(TAG, "isAdShown $it")
-                            listener.invoke()
+                            activity.runOnUiThread { listener.invoke() }
                         }, {
                             isAdShow = true
                         })
                 }
             }
         } else {
-            listener.invoke()
+            activity.runOnUiThread { listener.invoke() }
         }
     }
 }
