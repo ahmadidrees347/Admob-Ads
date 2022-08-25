@@ -132,9 +132,7 @@ open class InterAdmobClass {
     ) {
         var isTimeUp = false
         var isAdShow = false
-        if (activity.isNetworkAvailable() &&
-            activity.verifyInstallerId()
-        ) {
+        if (activity.isNetworkAvailable()) {
             afterDelay(waitingTimeForAd) {
                 if (!activity.isDestroyed && !activity.isFinishing)
                     if (dialog?.isShowing == true) {
